@@ -1,3 +1,7 @@
+export interface UserRegisterBody {
+  username: string;
+  password: string;
+}
 export interface UserType {
   user_id?: number;
   username: string;

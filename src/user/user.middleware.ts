@@ -1,7 +1,7 @@
 import { HttpException, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { UserRegisterBody } from 'src/controller/user/type';
-import { UsersService } from 'src/service/user.service';
+import { UserRegisterBody } from './type';
+import { UsersService } from './user.service';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {

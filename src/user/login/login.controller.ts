@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpException } from '@nestjs/common';
 // import { CatsService } from '../../service/user.service';
-import { UsersService } from 'src/service/user.service';
+import { UsersService } from '../user.service';
 import { decrypt, stringToBuffer } from 'src/helper/ase';
 @Controller('gather')
 export class LoginController {

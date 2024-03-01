@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entities';
-import { UserType } from '../entities/type';
+import { User } from './user.entities';
+import { UserType } from './type';
 import { cloneDeep } from 'lodash';
 
 @Injectable()

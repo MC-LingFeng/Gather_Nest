@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UsersService } from '../../service/user.service';
+import { UsersService } from '../user.service';
 import { encryption, bufferToString } from 'src/helper/ase';
-import { UserType } from 'src/entities/type';
+import { UserType } from '../type';
 @Controller('gather')
 export class RegisterController {
   constructor(private readonly usersService: UsersService) {}

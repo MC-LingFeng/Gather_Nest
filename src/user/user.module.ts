@@ -1,10 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RegisterController } from './register.controller';
-import { LoginController } from './login.controller';
-import { User } from '../../entities/user.entities';
-import { UsersService } from '../../service/user.service';
-import { UserMiddleware } from '../../middleware/user.middleware';
+import { RegisterController } from './register/register.controller';
+import { LoginController } from './login/login.controller';
+import { User } from './user.entities';
+import { UsersService } from './user.service';
+import { UserMiddleware } from './user.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
