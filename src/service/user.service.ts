@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entities';
 import { UserType } from '../entities/type';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -10,7 +11,14 @@ export class UsersService {
     @InjectRepository(User)
     private catsRepository: Repository<UserType>,
   ) {}
+  private user: UserType[] = [];
 
+  getUser(): UserType[] {
+    return this.user;
+  }
+  setUser(value: UserType[]): void {
+    this.user = cloneDeep(value);
+  }
   findAll(): Promise<UserType[]> {
     return this.catsRepository.find();
   }

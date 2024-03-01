@@ -1,19 +1,26 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from '../../service/user.service';
-import { User } from '../../entities/user.entities';
+import { encryption, bufferToString } from 'src/helper/ase';
+import { UserType } from 'src/entities/type';
 @Controller('gather')
 export class RegisterController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  async getssss(@Body() body) {
-    console.log(typeof body);
-    const getItem = await this.usersService.findOneForName(
-      body?.username ?? '',
-    );
-
-    return {
-      item: getItem,
+  async registerPost(@Body() body) {
+    const encryptionList = encryption(body.password);
+    const stringEncrypt = bufferToString(encryptionList);
+    const values: UserType = {
+      username: body.username,
+      password_encrypted: stringEncrypt[0],
+      password_tag: stringEncrypt[1],
+      password_key: stringEncrypt[2],
+      password_vector: stringEncrypt[3],
+      password_algorithm: stringEncrypt[4],
+      grade: 0,
     };
+    await this.usersService.create(values);
+
+    return null;
   }
 }
