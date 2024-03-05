@@ -8,7 +8,6 @@ export class UserMiddleware implements NestMiddleware {
   constructor(private readonly usersService: UsersService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log('Request...');
     const body: UserRegisterBody = req.body;
     const getItem = await this.usersService.findOneForName(
       body?.username ?? '',
@@ -26,8 +25,6 @@ export class UserMiddleware implements NestMiddleware {
         );
       }
     } else if (login) {
-      console.log('login');
-
       if (!getItem) {
         throw new HttpException(
           { message: '用户名输入有误!', code: 201, data: null },
