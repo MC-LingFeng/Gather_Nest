@@ -6,6 +6,8 @@ import { User } from './user/user.entities';
 import { UsersModule } from './user/user.module';
 import { AuthService } from './user/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { RouteModule } from './route/route.module';
+import { RoutesPath } from './route/route.entities';
 
 @Module({
   imports: [
@@ -16,10 +18,11 @@ import { JwtService } from '@nestjs/jwt';
       username: 'root',
       password: 'nishishabi1999',
       database: 'gather_data',
-      entities: [User],
+      entities: [User, RoutesPath],
       synchronize: false,
     }),
     UsersModule,
+    RouteModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],
