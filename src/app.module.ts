@@ -3,11 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './user/user.entities';
+import { Themes } from './theme/theme.entities';
 import { UsersModule } from './user/user.module';
 import { AuthService } from './user/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { RouteModule } from './route/route.module';
 import { RoutesPath } from './route/route.entities';
+import { ThemeModule } from './theme/theme.module';
 
 @Module({
   imports: [
@@ -18,11 +20,12 @@ import { RoutesPath } from './route/route.entities';
       username: 'root',
       password: 'nishishabi1999',
       database: 'gather_data',
-      entities: [User, RoutesPath],
+      entities: [User, RoutesPath, Themes],
       synchronize: false,
     }),
     UsersModule,
     RouteModule,
+    ThemeModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],
