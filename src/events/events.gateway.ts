@@ -1,0 +1,129 @@
+import {
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+  WsResponse,
+} from '@nestjs/websockets';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Server } from 'socket.io';
+import getMessageArticle from 'src/helper/openai/formatMessage';
+import { chatForMsg4 } from 'src/OpenAI';
+
+@WebSocketGateway(8080, {
+  cors: {
+    origin: '*',
+  },
+})
+export class EventsGateway {
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('events')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  findAll(msg): Observable<WsResponse<number>> {
+    console.log('我执行了');
+    return msg;
+  }
+
+  @SubscribeMessage('openai')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async openai(@MessageBody() data: any) {
+    console.log('我执行了两次', data);
+    console.log('接收消息events的数据', this.server);
+    this.server.sockets.send('openai', '接收消息events的数据');
+    // const createMessage = getMessageArticle(data);
+    // const values = await chatForMsg4(createMessage as any);
+    // console.log('start v4 stream');
+    // // 最后，全部完成
+    // const decoder = new TextDecoder('utf-8');
+    // const stream = values.toReadableStream();
+    // const reader = stream.getReader();
+
+    // while (true) {
+    //   const { done, value } = await reader.read();
+    //   if (done) {
+    //     console.log('end v4 stream');
+    //     // this.server.emit('exception', `我是服务端发来的消息end`);
+    //     // this.server.send('end');
+    //     return 'end';
+    //   }
+    //   const chunk = decoder.decode(value);
+    //   const parsedLine = JSON.parse(chunk);
+    //   const { choices } = parsedLine;
+    //   if (choices && choices?.length > 0) {
+    //     const { delta } = choices[0];
+    //     const { content } = delta;
+    //     if (content) {
+    //       console.log(content);
+
+    //       // this.server.send('end');
+    //       // return content;
+    //       // this.findAll(content);
+    //       this.server.send('openai', content);
+    //       // this.server('exception', `我是服务端发来的消息${content}`);
+    //       // this.server.send(`${content}`);
+    //       // list.push(`${content}`);
+    //     }
+    //   }
+    // }
+    // values.then(async (data) => {
+    //   console.log('start v4 stream');
+    //   // 最后，全部完成
+    //   const decoder = new TextDecoder('utf-8');
+    //   const stream = data.toReadableStream();
+    //   const reader = stream.getReader();
+
+    //   while (true) {
+    //     const { done, value } = await reader.read();
+    //     if (done) {
+    //       console.log('end v4 stream');
+    //       // this.server.emit('exception', `我是服务端发来的消息end`);
+    //       // this.server.send('end');
+    //       return '1';
+    //     }
+    //     const chunk = decoder.decode(value);
+    //     const parsedLine = JSON.parse(chunk);
+    //     const { choices } = parsedLine;
+    //     if (choices && choices?.length > 0) {
+    //       const { delta } = choices[0];
+    //       const { content } = delta;
+    //       if (content) {
+    //         console.log(content);
+
+    //         // this.server.send('end');
+    //         return content;
+    //         // this.server('exception', `我是服务端发来的消息${content}`);
+    //         // this.server.send(`${content}`);
+    //         // list.push(`${content}`);
+    //       }
+    //     }
+    //   }
+    // });
+    // console.log(value);
+    // if (value.start === 'pase') {
+    // const valuse = getMSG.bind(this, data) as any[];
+    // console.log(valuse);
+    // // return { event: '123', data: 1 };
+    // // return from(valuse).pipe(map((item) => ({ event: 'events', data: item })));
+    // // }
+    // return from([1, 2, 3]).pipe(
+    //   map((item) => ({ event: 'events', data: item })),
+    // );
+  }
+
+  @SubscribeMessage('identity')
+  async identity(@MessageBody() data: number): Promise<number> {
+    console.log('接收identity的数据', data);
+    // await new Promise((reslove,reject)=>{
+    //   setTimeout(reslove,2000)
+    // })
+    return 1;
+  }
+  PublicMessage(message: string): void {
+    setInterval(() => {
+      this.server.emit('exception', `我是服务端发来的消息${message}`);
+    }, 1000);
+  }
+}

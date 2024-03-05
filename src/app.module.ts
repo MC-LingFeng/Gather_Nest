@@ -10,6 +10,8 @@ import { JwtService } from '@nestjs/jwt';
 import { RouteModule } from './route/route.module';
 import { RoutesPath } from './route/route.entities';
 import { ThemeModule } from './theme/theme.module';
+import { EventsGateway } from './events/events.gateway';
+import { OpenAiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { ThemeModule } from './theme/theme.module';
     UsersModule,
     RouteModule,
     ThemeModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],

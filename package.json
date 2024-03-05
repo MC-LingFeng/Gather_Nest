@@ -25,7 +25,10 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.3",
+    "@nestjs/platform-ws": "^10.3.3",
     "@nestjs/typeorm": "^10.0.2",
+    "@nestjs/websockets": "^10.3.3",
     "@types/lodash": "^4.14.202",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
@@ -37,7 +40,9 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "save": "^2.9.0",
-    "typeorm": "^0.3.20"
+    "socket.io": "^4.7.4",
+    "typeorm": "^0.3.20",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
