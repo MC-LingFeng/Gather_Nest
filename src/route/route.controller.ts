@@ -7,7 +7,7 @@ export class RouteController {
   constructor(private readonly routeService: RouteService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('route')
+  @Get('routes')
   async loginPost() {
     const routes = this.routeService.getUser() ?? [];
     if (routes.length > 0) {
