@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { decrypt, stringToBuffer } from 'src/helper/ase';
 import { UserType } from '../type';
 import { RedisCacheService } from 'src/db/redis-cache.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly redis: RedisCacheService,
+    private readonly configService: ConfigService,
   ) {}
 
   // JWT验证 - Step 2: 校验用户信息
@@ -53,7 +55,8 @@ export class AuthService {
         user_id: user.user_id,
         username: user.username,
         grade: user.grade,
-        time: 1000,
+        time: this.configService.get('TOKEN_TIME'),
+        create_time: new Date().toJSON(),
       });
       return {
         token,

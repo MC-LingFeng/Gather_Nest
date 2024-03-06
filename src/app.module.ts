@@ -13,6 +13,9 @@ import { ThemeModule } from './theme/theme.module';
 import { OpenAiModule } from './openai/openai.module';
 import { RedisCacheModule } from './db/redis-cache.module';
 import { ConfigModule } from '@nestjs/config';
+import * as path from 'path';
+
+const env = path.basename('/env');
 
 @Module({
   imports: [
@@ -29,7 +32,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
       // 指定存储环境变量的文件, 靠前的文件拥有较高的优先级
-      envFilePath: [`/env/.env.${process.env.NODE_ENV}`],
+      envFilePath: [`${env}/.env.${process.env.NODE_ENV}`],
       // envFilePath,
     }),
     UsersModule,
