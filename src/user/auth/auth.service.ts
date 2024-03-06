@@ -4,12 +4,14 @@ import { UsersService } from '../user.service';
 import { JwtService } from '@nestjs/jwt';
 import { decrypt, stringToBuffer } from 'src/helper/ase';
 import { UserType } from '../type';
+import { RedisCacheService } from 'src/db/redis-cache.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly redis: RedisCacheService,
   ) {}
 
   // JWT验证 - Step 2: 校验用户信息
@@ -30,7 +32,7 @@ export class AuthService {
     const password = decrypt(buffer);
 
     if (body.password === password) {
-      return { code: 200, msg: '登录成功', user: nowUser };
+      return { code: 200, msg: '登录成功', user: nowUser[0] };
     } else {
       return { code: 101, msg: '密码错误', user: null };
     }
@@ -46,6 +48,13 @@ export class AuthService {
     console.log('JWT验证 - Step 3: 处理 jwt 签证');
     const token = this?.jwtService?.sign(payload);
     if (token) {
+      this.redis.set(user.username, {
+        token,
+        user_id: user.user_id,
+        username: user.username,
+        grade: user.grade,
+        time: 1000,
+      });
       return {
         token,
         ...payload,

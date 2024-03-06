@@ -11,6 +11,7 @@ import { jwtConstants } from './auth/constants';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
 import { JwtStrategy } from './auth/jwt.strategy';
+import { RedisCacheModule } from 'src/db/redis-cache.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '8h' }, // token 过期时效
     }),
+    RedisCacheModule,
   ],
   controllers: [RegisterController, LoginController],
   providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],

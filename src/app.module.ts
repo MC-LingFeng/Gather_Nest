@@ -10,8 +10,9 @@ import { JwtService } from '@nestjs/jwt';
 import { RouteModule } from './route/route.module';
 import { RoutesPath } from './route/route.entities';
 import { ThemeModule } from './theme/theme.module';
-import { EventsGateway } from './events/events.gateway';
 import { OpenAiModule } from './openai/openai.module';
+import { RedisCacheModule } from './db/redis-cache.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -25,10 +26,17 @@ import { OpenAiModule } from './openai/openai.module';
       entities: [User, RoutesPath, Themes],
       synchronize: false,
     }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      // 指定存储环境变量的文件, 靠前的文件拥有较高的优先级
+      envFilePath: [`/env/.env.${process.env.NODE_ENV}`],
+      // envFilePath,
+    }),
     UsersModule,
     RouteModule,
     ThemeModule,
     OpenAiModule,
+    RedisCacheModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],
