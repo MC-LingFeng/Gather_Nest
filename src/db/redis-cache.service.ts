@@ -15,4 +15,9 @@ export class RedisCacheService {
   async set(key: string, value: string | Record<string, string | number>) {
     return await this.redis.set(key, JSON.stringify(value));
   }
+
+  // 删除redis
+  async del(key: string) {
+    return await this.redis.del(key);
+  }
 }
