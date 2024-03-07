@@ -9,7 +9,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
 import { AuthService } from './auth/auth.service';
-import { LocalStrategy } from './auth/local.strategy';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RedisCacheModule } from 'src/db/redis-cache.module';
 
@@ -19,12 +18,12 @@ import { RedisCacheModule } from 'src/db/redis-cache.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '8h' }, // token 过期时效
+      signOptions: { expiresIn: '100y' }, // token 过期时效
     }),
     RedisCacheModule,
   ],
   controllers: [RegisterController, LoginController],
-  providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
+  providers: [UsersService, AuthService, JwtStrategy],
   exports: [AuthService, UsersService],
 })
 export class UsersModule implements NestModule {

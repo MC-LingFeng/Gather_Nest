@@ -6,8 +6,7 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 import getMessageArticle from 'src/helper/openai/formatMessage';
 import { chatForMsg4 } from 'src/OpenAI';

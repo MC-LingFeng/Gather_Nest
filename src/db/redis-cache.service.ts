@@ -12,8 +12,12 @@ export class RedisCacheService {
   }
 
   // 设置redis
-  async set(key: string, value: string | Record<string, string | number>) {
-    return await this.redis.set(key, JSON.stringify(value));
+  async set(
+    key: string,
+    value: string | Record<string, string | number>,
+    scends: number,
+  ) {
+    return await this.redis.set(key, JSON.stringify(value), 'EX', scends);
   }
 
   // 删除redis

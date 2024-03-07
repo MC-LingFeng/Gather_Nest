@@ -6,7 +6,7 @@ import { User } from './user/user.entities';
 import { Themes } from './theme/theme.entities';
 import { UsersModule } from './user/user.module';
 import { AuthService } from './user/auth/auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { RouteModule } from './route/route.module';
 import { RoutesPath } from './route/route.entities';
 import { ThemeModule } from './theme/theme.module';
@@ -14,6 +14,7 @@ import { OpenAiModule } from './openai/openai.module';
 import { RedisCacheModule } from './db/redis-cache.module';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
+import { jwtConstants } from './user/auth/constants';
 
 const env = path.basename('/env');
 
@@ -34,6 +35,10 @@ const env = path.basename('/env');
       // 指定存储环境变量的文件, 靠前的文件拥有较高的优先级
       envFilePath: [`${env}/.env.${process.env.NODE_ENV}`],
       // envFilePath,
+    }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '100y' }, // token 过期时效
     }),
     UsersModule,
     RouteModule,

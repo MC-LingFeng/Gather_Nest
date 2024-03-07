@@ -27,14 +27,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (redisItem === null) {
       return false;
     }
-    const redisItemDate = new Date(redisItem.create_time);
-    const nowDate = new Date();
-    const diff = nowDate.getTime() - redisItemDate.getTime();
-
-    if (diff > Number(redisItem.time) * 1000) {
-      await this.redis.del(payload.username);
-      return false;
-    }
 
     return payload;
   }

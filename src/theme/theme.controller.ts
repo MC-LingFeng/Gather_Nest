@@ -16,13 +16,13 @@ export class ThemeController {
   @Get('theme')
   async themeGet() {
     const routes = this.themeService.get() ?? [];
-    if (routes.length > 0) {
+    if (routes.length === 0) {
       throw new HttpException(
         { code: 201, data: null, message: '数据异常' },
         200,
       );
     } else {
-      return routes;
+      return routes[0];
     }
   }
 

@@ -9,7 +9,6 @@ class DateTime extends Date {
     const hour = this.getHours();
     const min = this.getMinutes();
     const second = this.getSeconds();
-    console.log(date);
 
     return `${year}-${month + 1}-${date}${hour}:${min}:${second}`;
   }

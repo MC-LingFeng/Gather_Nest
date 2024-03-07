@@ -10,7 +10,8 @@ export class RouteController {
   @Get('routes')
   async loginPost() {
     const routes = this.routeService.getUser() ?? [];
-    if (routes.length > 0) {
+
+    if (routes.length === 0) {
       throw new HttpException(
         { code: 201, data: null, message: '数据异常' },
         200,

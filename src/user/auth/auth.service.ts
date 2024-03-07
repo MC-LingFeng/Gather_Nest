@@ -49,15 +49,20 @@ export class AuthService {
     };
     console.log('JWT验证 - Step 3: 处理 jwt 签证');
     const token = this?.jwtService?.sign(payload);
+
     if (token) {
-      this.redis.set(user.username, {
-        token,
-        user_id: user.user_id,
-        username: user.username,
-        grade: user.grade,
-        time: this.configService.get('TOKEN_TIME'),
-        create_time: new Date().toJSON(),
-      });
+      await this.redis.set(
+        user.username,
+        {
+          token,
+          user_id: user.user_id,
+          username: user.username,
+          grade: user.grade,
+          time: this.configService.get('TOKEN_TIME'),
+          create_time: new Date().toJSON(),
+        },
+        Number(this.configService.get('TOKEN_TIME')),
+      );
       return {
         token,
         ...payload,

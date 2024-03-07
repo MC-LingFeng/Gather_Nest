@@ -13,6 +13,6 @@ import { RoutesPath } from './route.entities';
 })
 export class RouteModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RouteMiddleware).forRoutes('/gather/route');
+    consumer.apply(RouteMiddleware).forRoutes('/gather/routes');
   }
 }
