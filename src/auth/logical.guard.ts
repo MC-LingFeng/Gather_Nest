@@ -2,22 +2,19 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ExecutionContext,
   HttpException,
-  // CanActivate, ExecutionContext,
+  Inject,
   Injectable,
 } from '@nestjs/common';
-// import { Observable } from 'rxjs';
+import { RedisCacheService } from 'src/db/redis-cache.service';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor() {
-    super();
-  }
+  @Inject(RedisCacheService)
+  private readonly redis: RedisCacheService;
 
-  canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext) {
     const request = super.getRequest(context);
-    // console.log(request);
-
-    // console.log();
     const token = request.header('authorization');
+    let user: any = {};
     try {
       const strings = token.split('.');
       const userinfo = JSON.parse(
@@ -25,17 +22,22 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
           escape(atob(strings[1].replace(/-/g, '+').replace(/_/g, '/'))),
         ),
       );
-      console.log(12);
-      this.handleRequest(false, userinfo, token);
+      user = userinfo;
+      // this.handleRequest(false, userinfo, token);
     } catch (err) {
       this.handleRequest(true, true, token);
     }
+    const getToken = await this.redis.get(user.username);
+
+    if (!getToken) {
+      this.handleRequest(true, true, token);
+    }
+
     return true;
   }
 
   handleRequest(err, user, token) {
     console.log(err, user, token);
-
     // 您可以基于 "info" 或 "err" 参数抛一个错误
     if (err || !user) {
       throw new HttpException(

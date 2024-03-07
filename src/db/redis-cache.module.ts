@@ -1,8 +1,9 @@
 import { RedisCacheService } from './redis-cache.service';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Redis } from 'ioredis';
 
+@Global()
 @Module({
   imports: [
     ClientsModule.register([
