@@ -11,6 +11,7 @@ import { jwtConstants } from './auth/constants';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RedisCacheModule } from 'src/db/redis-cache.module';
+import { LoginOutController } from './loginout/loginout.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { RedisCacheModule } from 'src/db/redis-cache.module';
     }),
     RedisCacheModule,
   ],
-  controllers: [RegisterController, LoginController],
+  controllers: [RegisterController, LoginController, LoginOutController],
   providers: [UsersService, AuthService, JwtStrategy],
   exports: [AuthService, UsersService],
 })
