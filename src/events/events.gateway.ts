@@ -30,7 +30,6 @@ export class EventsGateway {
   @SubscribeMessage('openai')
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async openai(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
-    client.send('openai', '接收消息openai的数据');
     const createMessage = getMessageArticle(data);
     const values = await chatForMsg4(createMessage as any);
     console.log('start v4 stream');
@@ -43,7 +42,8 @@ export class EventsGateway {
       const { done, value } = await reader.read();
       if (done) {
         console.log('end v4 stream');
-        return 'end';
+        client.send('end');
+        return;
       }
       const chunk = decoder.decode(value);
       const parsedLine = JSON.parse(chunk);

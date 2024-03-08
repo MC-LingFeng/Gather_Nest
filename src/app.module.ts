@@ -15,6 +15,8 @@ import { RedisCacheModule } from './db/redis-cache.module';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
 import { jwtConstants } from './user/auth/constants';
+import { WordModule } from './word/word.module';
+import { Word } from './word/word.entities';
 
 const env = path.basename('/env');
 
@@ -27,7 +29,7 @@ const env = path.basename('/env');
       username: 'root',
       password: 'nishishabi1999',
       database: 'gather_data',
-      entities: [User, RoutesPath, Themes],
+      entities: [User, RoutesPath, Themes, Word],
       synchronize: false,
     }),
     ConfigModule.forRoot({
@@ -45,6 +47,7 @@ const env = path.basename('/env');
     ThemeModule,
     OpenAiModule,
     RedisCacheModule,
+    WordModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtService],

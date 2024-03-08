@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterController } from './register/register.controller';
 import { LoginController } from './login/login.controller';
@@ -13,6 +13,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
 import { RedisCacheModule } from 'src/db/redis-cache.module';
 import { LoginOutController } from './loginout/loginout.controller';
 
+@Global()
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
