@@ -9,6 +9,7 @@ export class LoginController {
   async loginPost(@Body() body) {
     console.log('JWT验证 - Step 1: 用户请求登录');
     const authResult = await this.authService.validateUser(body);
+
     switch (authResult.code) {
       case 200:
         return this.authService.certificate(authResult.user);

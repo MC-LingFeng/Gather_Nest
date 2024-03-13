@@ -50,6 +50,8 @@ export class AuthService {
     const token = this?.jwtService?.sign(payload);
 
     if (token) {
+      console.log(this.configService.get('TOKEN_TIME'), 'timesss');
+
       await this.redis.set(
         user.username,
         {
@@ -62,6 +64,7 @@ export class AuthService {
         },
         Number(this.configService.get('TOKEN_TIME')),
       );
+
       return {
         token,
         ...payload,
