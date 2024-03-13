@@ -10,7 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/jwt.strategy';
-import { RedisCacheModule } from 'src/db/redis-cache.module';
+import { RedisCacheModule } from '../db/redis-cache.module';
 import { LoginOutController } from './loginout/loginout.controller';
 
 @Global()

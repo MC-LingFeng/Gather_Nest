@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Word } from './word.entities';
-import { RedisCacheModule } from 'src/db/redis-cache.module';
+import { RedisCacheModule } from '../db/redis-cache.module';
 import { WordService } from './word.service';
 import { WordController } from './word.controller';
 

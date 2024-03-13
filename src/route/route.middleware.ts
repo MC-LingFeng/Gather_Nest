@@ -1,7 +1,7 @@
 import { HttpException, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { RouteService } from './route.service';
-import formatPath from 'src/helper/route/formatPath';
+import formatPath from '../helper/route/formatPath';
 
 @Injectable()
 export class RouteMiddleware implements NestMiddleware {

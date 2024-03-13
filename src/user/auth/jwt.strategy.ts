@@ -1,11 +1,10 @@
-// src/logical/auth/jwt.strategy.ts
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { jwtConstants } from './constants';
 import { UserType } from '../type';
 import { AuthService } from './auth.service';
-import { RedisCacheService } from 'src/db/redis-cache.service';
+import { RedisCacheService } from '../../db/redis-cache.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

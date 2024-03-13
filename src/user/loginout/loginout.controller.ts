@@ -1,5 +1,5 @@
 import { Body, Controller, HttpException, Post } from '@nestjs/common';
-import { RedisCacheService } from 'src/db/redis-cache.service';
+import { RedisCacheService } from '../../db/redis-cache.service';
 @Controller('gather')
 export class LoginOutController {
   constructor(private readonly redis: RedisCacheService) {}

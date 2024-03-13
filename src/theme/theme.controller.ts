@@ -6,7 +6,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/logical.guard';
+import { JwtAuthGuard } from '../auth/logical.guard';
 import { ThemeService } from './theme.service';
 
 @Controller('gather')

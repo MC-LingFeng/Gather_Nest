@@ -5,7 +5,7 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { RedisCacheService } from 'src/db/redis-cache.service';
+import { RedisCacheService } from '../db/redis-cache.service';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   @Inject(RedisCacheService)

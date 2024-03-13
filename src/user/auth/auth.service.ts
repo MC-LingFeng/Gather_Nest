@@ -1,10 +1,9 @@
-// src/logical/auth/auth.service.ts
 import { HttpException, Injectable } from '@nestjs/common';
 import { UsersService } from '../user.service';
 import { JwtService } from '@nestjs/jwt';
-import { decrypt, stringToBuffer } from 'src/helper/ase';
+import { decrypt, stringToBuffer } from '../../helper/ase';
 import { UserType } from '../type';
-import { RedisCacheService } from 'src/db/redis-cache.service';
+import { RedisCacheService } from '../../db/redis-cache.service';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

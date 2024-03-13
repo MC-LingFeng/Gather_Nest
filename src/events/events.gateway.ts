@@ -8,10 +8,11 @@ import {
 } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
-import getMessageArticle from 'src/helper/openai/formatMessage';
-import { chatForMsg4 } from 'src/OpenAI';
+import getMessageArticle from '../helper/openai/formatMessage';
+import { chatForMsg4 } from '../OpenAI';
 
 @WebSocketGateway(8080, {
+  path: '/socket',
   cors: {
     origin: '*',
   },

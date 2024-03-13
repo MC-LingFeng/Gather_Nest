@@ -1,5 +1,5 @@
 import { Controller, Get, HttpException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/logical.guard';
+import { JwtAuthGuard } from '../auth/logical.guard';
 import { RouteService } from './route.service';
 
 @Controller('gather')

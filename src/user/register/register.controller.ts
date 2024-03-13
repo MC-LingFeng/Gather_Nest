@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from '../user.service';
-import { encryption, bufferToString } from 'src/helper/ase';
+import { encryption, bufferToString } from '../../helper/ase';
 import { UserType } from '../type';
 @Controller('gather')
 export class RegisterController {

@@ -1,4 +1,4 @@
-import { RouteType } from 'src/route/type';
+import { RouteType } from '../../route/type';
 
 const formatPath = (res: Array<RouteType>) => {
   const fatherItem = res.filter((item) => item.father_path === null);
