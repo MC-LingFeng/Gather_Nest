@@ -19,6 +19,17 @@ import { WordModule } from './word/word.module';
 import { Word } from './word/word.entities';
 
 const env = path.basename('/env');
+const envPath = [];
+const envi = env + '/.env';
+envPath.push(envi);
+if (process.env.NODE_ENV === 'production') {
+  const envpro = env + '/.env.production';
+  envPath.push(envpro);
+} else {
+  const envdev = env + '/.env.development';
+  envPath.push(envdev);
+}
+console.log(envPath);
 
 @Module({
   imports: [
@@ -35,7 +46,8 @@ const env = path.basename('/env');
     ConfigModule.forRoot({
       isGlobal: true,
       // 指定存储环境变量的文件, 靠前的文件拥有较高的优先级
-      envFilePath: [`${env}/.env.${process.env.NODE_ENV}`],
+      // envFilePath: [`${env}/.env.${process.env.NODE_ENV}`],
+      envFilePath: envPath,
       // envFilePath,
     }),
     JwtModule.register({
