@@ -9,7 +9,8 @@ import {
 import { Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 import getMessageArticle from '../helper/openai/formatMessage';
-import { chatForMsg4 } from '../OpenAI';
+import { chatForImg, chatForMsg4 } from '../OpenAI';
+import { ImageGenerateParams } from 'openai/resources';
 
 @WebSocketGateway(8080, {
   path: '/socket',
@@ -59,13 +60,22 @@ export class EventsGateway {
     }
   }
 
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    console.log('接收identity的数据', data);
-    // await new Promise((reslove,reject)=>{
-    //   setTimeout(reslove,2000)
-    // })
-    return 1;
+  @SubscribeMessage('aipicture')
+  async aipicture(
+    @MessageBody() data: ImageGenerateParams,
+    @ConnectedSocket() client: Socket,
+  ): Promise<undefined> {
+    console.log('接收aipicture的数据', data);
+    const values = await chatForImg(data, {
+      stream: false,
+    });
+    const sendData = JSON.stringify({
+      code: 200,
+      message: 'success',
+      data: values,
+    });
+    client.send(sendData);
+    client.send('end');
   }
   PublicMessage(message: string): void {
     setInterval(() => {
